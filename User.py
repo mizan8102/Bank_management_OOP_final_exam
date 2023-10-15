@@ -11,5 +11,5 @@ class User:
         self.account_number = name[:2] + str(random.randint(1, 100)) + email[:3]
         self.loanCount = 0
         self.loanAmount = 0
-        self.isLoanActive = True
         self.loanLock = False
+        self.transaction_history = []
