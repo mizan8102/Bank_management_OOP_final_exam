@@ -2,8 +2,9 @@ from User import User
 
 
 class Bank:
-    def __init__(self, user: User) -> None:
-        self.user = user
+    bankDraft = False
+
+    def __init__(self) -> None:
         self.transaction_history = []
         self.accounts = []
 
@@ -39,10 +40,33 @@ class Bank:
 
         return total
 
+    # loan feature active and deactive
+    def isActiveDeactiveLoan(self, account_number: int) -> None:
+        usr: User = [u for u in self.accounts if u.account_number == account_number]
+        usr.isLoanActive = not usr.isLoanActive
+
     # change loan lock
     def loan_lock(self, account_number: int) -> None:
         usr: User = [u for u in self.accounts if u.account_number == account_number]
         usr.loanLock = True
+
+    # amount transfer
+    def amount_transfer(
+        self, my_account: str, transfer_account, transfer_amount: int
+    ) -> None:
+        usr: User = [u for u in self.accounts if u.account_number == my_account]
+        trn_usr: User = [
+            u for u in self.accounts if u.account_number == transfer_account
+        ]
+        if trn_usr:
+            if usr.balance >= transfer_amount:
+                trn_usr.balance += transfer_amount
+                usr.balance -= transfer_amount
+
+            else:
+                print("Your have not enough amount to transfer")
+        else:
+            print("Account does not exist")
 
     # get current amount
     def current_balance(self, account_number: int) -> int:
@@ -60,6 +84,12 @@ class Bank:
     # withdraw amount
     def withdraw_amount(self, account_number: str, amount: int) -> None:
         usr: User = [u for u in self.accounts if u.account_number == account_number]
+
+        # bank draft check
+        if self.bankDraft:
+            print(f"the bank is bankrupt")
+            return
+
         if amount > 0:
             if usr.balance < amount:
                 print("Withdrawal amount exceeded")
@@ -76,6 +106,12 @@ class Bank:
     # deposit amount
     def deposit_amount(self, account_number: int, amount: int) -> None:
         usr: User = [u for u in self.accounts if u.account_number == account_number]
+
+        # bank draft check
+        if self.bankDraft:
+            print(f"the bank is bankrupt")
+            return
+
         if amount > 0:
             usr.balance += amount
             print(f"Deposit successfull. Account Number = { usr.account_number}")
