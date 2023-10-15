@@ -6,15 +6,22 @@ class Bank:
 
     def __init__(self) -> None:
         self.accounts = []
+        
+        
 
     # set bank draft
     def setBankDraft(self, opt: bool) -> None:
         self.bankDraft = opt
+        
+        
 
     # create account
     def create_account(self, user):
         self.accounts.append(user)
         print("Account created successful")
+        
+        
+        
 
     # delete account
     def delete_account(self, account_number):
@@ -24,6 +31,9 @@ class Bank:
             print("User deleted successful\n")
         else:
             print("cann't delete . try again\n")
+            
+            
+            
 
     # all user list
     def all_user(self):
@@ -34,6 +44,8 @@ class Bank:
                 )
         else:
             print("There have no users")
+            
+            
 
     # get available amount of Bank
     def availableAmountOfBank(self) -> int:
@@ -42,6 +54,8 @@ class Bank:
             total += usr.balance
 
         return total
+      
+      
 
     # total loan amount
     def total_loan_amount(self) -> int:
@@ -50,11 +64,15 @@ class Bank:
             total += usr.loanAmount
 
         return total
+      
+      
 
     # change loan lock
     def loan_lock(self, account_number: int, loanLock: bool) -> None:
         usr: User = [u for u in self.accounts if u.account_number == account_number]
         usr[0].loanLock = loanLock
+        
+        
 
     # amount transfer
     def amount_transfer(
@@ -64,7 +82,7 @@ class Bank:
         trn_usr: User = [
             u for u in self.accounts if u.account_number == transfer_account
         ]
-        if trn_usr:
+        if trn_usr and usr:
             if usr[0].balance >= transfer_amount:
                 trn_usr[0].balance += transfer_amount
                 usr[0].balance -= transfer_amount
@@ -86,11 +104,17 @@ class Bank:
                 print("Your have not enough amount to transfer")
         else:
             print("Account does not exist")
+            
+            
+            
 
     # get current amount
     def current_balance(self, account_number: int) -> int:
         usr: User = [u for u in self.accounts if u.account_number == account_number]
         print(f"Current Balance = {usr[0].balance}")
+        
+        
+        
 
     # add trnsaction history
     def addTransaction_history(
@@ -99,6 +123,8 @@ class Bank:
         usrr.transaction_history.append(
             f"Account number = {account_number}, name = { name}, and {type} amount = { amount}"
         )
+
+
 
     # show transaction history
     def show_transaction_history(self, account_number: str) -> None:
@@ -109,6 +135,8 @@ class Bank:
                 print(i)
         else:
             print("There have no transaction history ---\n")
+
+
 
     # withdraw amount
     def withdraw_amount(self, account_number: str, amount: int) -> None:
@@ -136,6 +164,9 @@ class Bank:
         else:
             print("\namount must be greater than 0 \n")
 
+
+
+
     # deposit amount
     def deposit_amount(self, account_number: int, amount: int) -> None:
         usr: User = [u for u in self.accounts if u.account_number == account_number]
@@ -154,6 +185,8 @@ class Bank:
             self.addTransaction_history(
                 account_number, usr[0].name, amount, "Deposit", usr[0]
             )
+
+
 
     # get loan
     def getLoan(self, account_number: int, amount: int) -> None:

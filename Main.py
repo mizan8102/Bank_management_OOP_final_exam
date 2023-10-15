@@ -133,7 +133,10 @@ if __name__ == "__main__":
                         bank.deposit_amount(accNum, amt)
 
                     elif choice == 6:
-                        amt: int = int(input("Enter Withdraw amount: "))
+                        try:
+                            amt: int = int(input("Enter Withdraw amount: "))
+                        except Exception as e:
+                            print("\ninput right value\n")
                         bank.withdraw_amount(accNum, amt)
 
                     elif choice == 7:
